@@ -1,0 +1,63 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Create Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <fieldset>
+        <legend>Please fill details </legend>
+
+        <form
+                method="post"
+                action="/adminCreatePublication"
+        >
+
+                    <p> {{ message }}</p>
+
+            <p>
+                Title:
+                <br>
+                <input type="text" name="title" required value=" ">
+            </p>
+            <p>
+                Author Id:
+                <br>
+                <input type="text" name="authorId" required value=" ">
+            </p>
+            <p>
+                Url:
+                <br>
+                <input type="text" name="url" required value=" ">
+            </p>
+            <p>
+                Pdf Path:
+                <br>
+                <input type="text" name="pdfPath" required value=" ">
+            </p>
+
+
+
+            <p>
+                <input type="submit" value="Change">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

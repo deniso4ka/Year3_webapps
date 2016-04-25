@@ -1,0 +1,60 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Change Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+
+
+    <fieldset>
+        <legend>{{ message }}</legend>
+
+        <form
+                method="post"
+                action="/changeLoginDetailsAdmin" enctype="multipart/form-data"
+        >
+
+            <p>
+                Position:
+                <br>
+                <input type="text" name="rank" required value="{{ loginRow.rank }}">
+            </p>
+            <p>
+                Project Id:
+                <br>
+                <input type="text" name="studentId" required value="{{  loginRow.studentId }}">
+            </p>
+
+               Project Status:
+                <br>
+                <input type="text" name="memberId" required value="{{  loginRow.memberId }}">
+            </p>
+            </p>
+
+            Password:
+            <br>
+            <input type="text" name="password" required value="{{  loginRow.password }}">
+            </p>
+
+
+
+
+            <p>
+                <input type="submit" value="Change">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+{% endblock %}

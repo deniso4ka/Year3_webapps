@@ -1,26 +1,46 @@
-{#----------------#}
-{# templates/_base.html.twig #}
-{#----------------#}
-
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>MGW - {% block pageTitle %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <title>Projects - {% block title %}{% endblock %}</title>
     <style>
-        @import '/css/style.css';
+        @import "/css/style.css";
+        @import "/css/nav.css";
     </style>
 </head>
 <body>
 
-<!-- nav -->
-<p>
-    <a href="/">home</a>
-</p>
-<hr>
+<nav>
+    <ul>
+        <li>
+            <a href="/home" class="{% block homeNavStyle %}{% endblock %}">Home</a>
+        </li>
+        <li>
+            <a href="/groups" class="{% block groupsNavStyle %}{% endblock %}">Groups</a>
+        </li>
+        <li>
+            <a href="/members" class="{% block membersNavStyle %}{% endblock %}">Members</a>
+        </li>
+        <li>
+            <a href="/publications" class="{% block publicationsNavStyle %}{% endblock %}">Publication</a>
+        </li>
+	    <li>
+            <a href="/projects" class="{% block projectsNavStyle %}{% endblock %}">Projects</a>
+        </li>
+        <li>
+            <a href="/pastWork" class="{% block pastWorkNavStyle %}{% endblock %}">Past</a>
+        </li>
+
+    </ul>
+</nav>
+
 
 {% block main %}
+
 {% endblock %}
 
+<footer>
+    2016 &copy; Deniss Timofeevs solulutions unlimited
+</footer>
 </body>
 </html>

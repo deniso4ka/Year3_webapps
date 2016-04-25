@@ -1,0 +1,62 @@
+{% extends '_base.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Members Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block membersNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+
+    <h3>{{ table1 }}</h3>
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> name </th>
+            <th> project Id </th>
+            <th> status </th>
+        </tr>
+
+
+        {% for member in membersPresent %}
+            <tr>
+                <td>{{ member.id }}</td>
+                <td><a href="detailMem/{{ member.id }}">{{ member.name }}</a></td>
+                <td>{{ member.projectId }}</td>
+                <td>{{ member.status }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <h3>{{ table2 }}</h3>
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> name </th>
+            <th> project Id </th>
+            <th> member Id </th>
+            <th> status </th>
+        </tr>
+
+        {% for student in studentsPresent %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td><a href="detailStud/{{ student.id }}">{{ student.name }}</a></td>
+                <td>{{ student.projectId }}</td>
+                <td>{{ student.memberId }}</td>
+                <td>{{ student.status }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+{% endblock %}

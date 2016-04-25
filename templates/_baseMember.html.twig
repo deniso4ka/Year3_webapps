@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects - {% block title %}{% endblock %}</title>
+    <style>
+        @import "/css/style.css";
+        @import "/css/nav.css";
+    </style>
+</head>
+<body>
+
+
+
+<nav>
+
+    <ul>
+        <li>
+            <a href="/memberProjectPicChange" >Edit project photo</a>
+        </li>
+
+        <li>
+            <a href="/memberPicChange" >Edit profile photo</a>
+        </li>
+
+        <li>
+            <a href="/memberInfoChange" >Edit info</a>
+        </li>
+
+        <li>
+            <a href="/logout" >Logout</a>
+        </li>
+
+    </ul>
+</nav>
+
+<nav>
+    <ul>
+
+        <li>
+            <a href="/memberPublicationDelete" >Publication Delete</a>
+        </li>
+        <li>
+            <a href="/memberEditPublication" >Publication Edit</a>
+        </li>
+        <li>
+            <a href="/memberCreatePublication" >Publication Create</a>
+        </li>
+
+
+
+    </ul>
+
+
+</nav>
+
+<nav>
+    <ul>
+
+        <li>
+            <a href="/memberProjectDelete">Project Delete</a>
+        </li>
+        <li>
+            <a href="/memberProjectEdit">Project Edit</a>
+        </li>
+        <li>
+            <a href="/memberProjectCreate">Project Create</a>
+        </li>
+
+
+
+    </ul>
+
+
+</nav>
+
+
+
+{% block main %}
+
+{% endblock %}
+
+<footer>
+    2016 &copy; Deniss Timofeevs solulutions unlimited
+</footer>
+</body>
+</html>

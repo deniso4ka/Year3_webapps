@@ -1,0 +1,59 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Create Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <fieldset>
+        <legend>{{ message }} </legend>
+
+        <form
+                method="post"
+                action="/createMemberAdmin" enctype="multipart/form-data"
+        >
+
+            <p>
+                Project Name:
+                <br>
+                <input type="text" name="name" required value=" ">
+            </p>
+            <p>
+                Project Supervisor:
+                <br>
+                <input type="text" name="projectId" required value=" ">
+            </p>
+            <p>
+                Status:
+                <br>
+                <input type="text" name="status" required value=" ">
+            </p>
+
+            <p>
+                Select image to set:
+                <br>
+            <input type="file" name="image">
+            </p>
+            <p>
+                <input type="submit" value="Change">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects - {% block title %}{% endblock %}</title>
+    <style>
+        @import "/css/style.css";
+        @import "/css/nav.css";
+    </style>
+</head>
+<body>
+
+
+
+<nav>
+    <ul>
+        <li>
+            <a href="/adminInfoChange">profile info and image change</a>
+        </li>
+        <li>
+            <a href="/logout" >Logout</a>
+        </li>
+    </ul>
+</nav>
+
+<nav>
+    <ul>
+        <li>
+            <a href="/adminProjectCreate">project create</a>
+        </li>
+        <li>
+            <a href="/adminProjectEdit">project edit</a>
+        </li>
+        <li>
+            <a href="/adminProjectDelete" >project delete</a>
+        </li>
+    </ul>
+</nav>
+<nav>
+    <ul>
+        <li>
+            <a href="/adminMemberCreate">member create</a>
+        </li>
+        <li>
+            <a href="/adminMemberEdit">member edit</a>
+        </li>
+        <li>
+            <a href="/adminMemberDelete">member delete</a>
+        </li>
+
+
+    </ul>
+</nav>
+
+<nav>
+
+    <ul>
+        <li>
+            <a href="/adminStudentCreate">student create</a>
+        </li>
+        <li>
+            <a href="/adminStudentEdit">student edit</a>
+        </li>
+        <li>
+            <a href="/adminStudentDelete">student delete</a>
+        </li>
+
+    </ul>
+</nav>
+
+<nav>
+    <ul>
+        <li>
+            <a href="/adminPublicationCreate">publication create</a>
+        </li>
+        <li>
+            <a href="/adminPublicationEdit">publication edit</a>
+        </li>
+        <li>
+            <a href="/adminPublicationDelete">publication delete</a>
+        </li>
+
+    </ul>
+</nav>
+<nav>
+    <ul>
+        <li>
+            <a href="/adminLoginCreate">login create</a>
+        </li>
+        <li>
+            <a href="/adminLoginEdit">login edit</a>
+        </li>
+        <li>
+            <a href="/adminLoginDelete">login delete</a>
+        </li>
+
+    </ul>
+</nav>
+
+
+
+
+
+{% block main %}
+
+{% endblock %}
+
+<footer>
+    2016 &copy; Deniss Timofeevs solulutions unlimited
+</footer>
+</body>
+</html>

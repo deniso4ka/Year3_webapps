@@ -1,0 +1,45 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Create Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> Rank </th>
+            <th> Student Id </th>
+            <th> Member Id </th>
+            <th> Password </th>
+
+
+        </tr>
+
+        {% for login in logins %}
+            <tr>
+                <td>{{ login.id }}</td>
+                <td>{{ login.rank }}</td>
+                <td>{{ login.studentId }}</td>
+                <td>{{ login.memberId }}</td>
+                <td>{{ login.password }}</td>
+                <td><a href="adminEditLogin/{{ login.id }}">{{ edit  }}</a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+
+
+
+
+
+{% endblock %}

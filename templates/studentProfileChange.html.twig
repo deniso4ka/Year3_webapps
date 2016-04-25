@@ -1,0 +1,64 @@
+{% extends '_baseStudent.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+   Home page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <dl>
+        <dt>Id</dt>
+        <dd>{{ student.id }}</dd>
+    </dl>
+
+
+    <fieldset>
+        <legend>Please fill new details </legend>
+
+        <form
+                method="post"
+                action="/changeStudentDetails"
+        >
+
+
+
+            <p>
+                Your name:
+                <br>
+                <input type="text" name="name" required value="{{ student.name }}">
+            </p>
+            <p>
+                Your project id:
+                <br>
+                <input type="text" name="projectId" required value="{{ student.projectId }}">
+            </p>
+            <p>
+                Your supervisor id:
+                <br>
+                <input type="text" name="memberId" required value="{{ student.memberId }}">
+            </p>
+            <p>
+                Status:
+                <br>
+                <input type="text" name="status" required value="{{ student.status }}">
+            </p>
+
+
+            <p>
+                <input type="submit" value="Change">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+
+{% endblock %}

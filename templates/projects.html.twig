@@ -1,0 +1,40 @@
+{% extends '_base.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Project page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block projectsNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+
+     <h3>Lists of present projects</h3>
+     
+     <table>
+         <tr>
+             <th> ID </th>
+             <th> name </th>
+             <th> supervisor </th>
+             <th> description </th>
+             <th> status </th>
+         </tr>
+    
+     
+     {% for project in projectsPresent %}
+         <tr>
+             <td>{{ project.id }}</td>
+             <td><a href="detailProject/{{ project.id }}">{{ project.name }}</a></td>
+             <td>{{ project.supervisor }}</td>
+             <td>{{ project.description }}</td>
+             <td>{{ project.status }}</td>
+         </tr>
+     {% endfor %}
+     
+</table>
+
+{% endblock %}
+

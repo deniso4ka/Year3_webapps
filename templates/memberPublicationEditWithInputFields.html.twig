@@ -1,0 +1,84 @@
+{% extends '_baseMember.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Change Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> tittle </th>
+            <th> author Id </th>
+            <th> url </th>
+            <th> pdf </th>
+
+
+
+        </tr>
+
+
+        {% for publication in publications %}
+            <tr>
+                <td>{{ publication.id }}</td>
+                <td>{{ publication.title }}</td>
+                <td>{{ publication.authorId }}</td>
+                <td>{{ publication.url }}</td>
+                <td>{{ publication.pdfPath }}</td>
+                <td><a href="memberEditPublic/{{ publication.id }}">{{ edit  }}</a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    <fieldset>
+        <legend>Please fill new details </legend>
+
+        <form
+                method="post"
+                action="/changePublicationDetails"
+        >
+
+
+
+            <p>
+                Title:
+                <br>
+                <input type="text" name="title" required value="{{ publicationRow.title }}">
+            </p>
+            <p>
+                Author Id:
+                <br>
+                <input type="text" name="authorId" required value="{{ publicationRow.authorId }}">
+            </p>
+            <p>
+               Url:
+                <br>
+                <input type="text" name="url" required value="{{  publicationRow.url }}">
+            </p>
+            <p>
+                Pdf Path:
+                <br>
+                <input type="text" name="pdfPath" required value="{{ publicationRow.pdfPath }}">
+            </p>
+
+
+
+            <p>
+                <input type="submit" value="Change">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Create Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <fieldset>
+        <legend>{{ message }} </legend>
+
+        <form
+                method="post"
+                action="/createLoginAdmin" enctype="multipart/form-data"
+        >
+
+            <p>
+                Rank:
+                <br>
+                <input type="text" name="rank" required value=" ">
+            </p>
+            <p>
+                Student Id (leave blank if not applicable):
+                <br>
+                <input type="text" name="studentId" required value=" ">
+            </p>
+            <p>
+                Member Id (leave blank if not applicable):
+                <br>
+                <input type="text" name="memberId" required value=" ">
+            </p>
+
+            <p>
+                Password:
+                <br>
+                <input type="password" name="password" required value=" ">
+            </p>
+            <p>
+                <input type="submit" value="Create">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

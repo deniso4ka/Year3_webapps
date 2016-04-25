@@ -1,0 +1,45 @@
+{% extends '_baseMember.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Change Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> tittle </th>
+            <th> author Id </th>
+            <th> url </th>
+            <th> pdf </th>
+
+
+
+        </tr>
+
+
+        {% for publication in publications %}
+            <tr>
+                <td>{{ publication.id }}</td>
+                <td>{{ publication.title }}</td>
+                <td>{{ publication.authorId }}</td>
+                <td>{{ publication.url }}</td>
+                <td>{{ publication.pdfPath }}</td>
+                <td><a href="memberEditPublic/{{ publication.id }}">{{ edit  }}</a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+
+
+
+{% endblock %}

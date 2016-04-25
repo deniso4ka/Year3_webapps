@@ -1,0 +1,41 @@
+{% extends '_base.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    page - days of week
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block publicationsNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+   <h3>Lists of publications</h3>
+   
+   <table>
+       <tr>
+           <th> ID </th>
+           <th> title </th>
+           <th> author id </th>
+           <th> url </th>
+
+         
+       </tr>
+  
+   
+   {% for publication in publications %}
+       <tr>
+           <td>{{ publication.id }}</td>
+           <td>{{ publication.title }}</td>
+           <td>{{ publication.authorId }}</td>
+           <td><a href="/pdf/{{ publication.pdfPath }}">{{ publication.pdfPath }}</a></td>
+         {#  <td><a href="{{ publication.url }}">download</a></td>#}
+
+   
+       </tr>
+   {% endfor %}
+   
+</table>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Change Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+
+
+    <fieldset>
+        <legend>{{ message }}</legend>
+
+        <form
+                method="post"
+                action="/changeProjectDetailsAdmin" enctype="multipart/form-data"
+        >
+
+
+            <p>
+                Project Name:
+                <br>
+                <input type="text" name="name" required value="{{ projectRow.name }}">
+            </p>
+            <p>
+                Project Supervisor:
+                <br>
+                <input type="text" name="supervisor" required value="{{  projectRow.supervisor }}">
+            </p>
+            <p>
+               Project Description:
+                <br>
+                <input type="text" name="description" required value="{{   projectRow.description }}">
+            </p>
+            <p>
+               Project Status:
+                <br>
+                <input type="text" name="status" required value="{{  projectRow.status }}">
+            </p>
+            <p>
+                Please change picture:
+                <br>
+                <input type="file" name="image">
+            </p>
+
+
+
+            <p>
+                <input type="submit" value="Change">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+{% endblock %}

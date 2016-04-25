@@ -1,0 +1,112 @@
+{% extends '_base.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+   Past Work Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block pastWorkNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+
+    <h3>{{ table1 }}</h3>
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> name </th>
+            <th> project Id </th>
+            <th> status </th>
+            <th> image </th>
+
+
+
+        </tr>
+
+
+        {% for member in membersPast %}
+            <tr>
+
+                <td>{{ member.id }}</td>
+                <td><a href="detailMem/{{ member.id }}">{{ member.name }}</a></td>
+                <td>{{ member.projectId }}</td>
+                <td>{{ member.status }}</td>
+                <td>{{ member.image }}</td>
+
+
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <h3>{{ table2 }}</h3>
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> name </th>
+            <th> project Id </th>
+            <th> member Id </th>
+            <th> status </th>
+            <th> image </th>
+
+        </tr>
+
+        {% for student in studentsPast %}
+            <tr>
+
+                <td>{{ student.id }}</td>
+                <td><a href="detailStud/{{ student.id }}">{{ student.name }}</a></td>
+                <td>{{ student.projectId }}</td>
+                <td>{{ student.memberId }}</td>
+                <td>{{ student.status }}</td>
+                <td>{{ student.image }}</td>
+
+
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <h3>{{ table3 }}</h3>
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> name </th>
+            <th> project Id </th>
+            <th> member Id </th>
+            <th> status </th>
+            <th> image </th>
+
+        </tr>
+
+        {% for project in projectsPast %}
+            <tr>
+
+                <td>{{ project.id }}</td>
+                <td><a href="detailProject/{{ project.id }}">{{ project.name }}</a></td>
+                <td>{{ project.supervisor }}</td>
+                <td>{{ project.description }}</td>
+                <td>{{ project.status }}</td>
+                <td>{{ project.image }}</td>
+
+
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+
+
+
+{% endblock %}

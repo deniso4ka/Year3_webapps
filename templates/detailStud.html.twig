@@ -1,0 +1,47 @@
+{% extends '_base.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Home page
+{% endblock %}
+
+{# ----------------------------------------#}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <dl>
+        <dt>Id</dt>
+        <dd>{{ student.id }}</dd>
+
+        <dt>Name</dt>
+        <dd>{{ student.name }}</dd>
+
+        <dt>Project Id</dt>
+        <dd>{{ student.projectId }}</dd>
+
+        <dt>Supervisor Id</dt>
+        <dd>{{ student.memberId }}</dd>
+
+        <dt>Status</dt>
+        <dd>{{ student.status }}</dd>
+
+        <dt>Image</dt>
+        <dd> <img class="img-circle" src="/images/{{ student.image }}" alt="image" style="width:150px; height:170px;"></dd>
+
+
+
+    </dl>
+
+    <p>--------------------------------------</p>
+    <h3>Supervised by :</h3>
+    {{ memberName }}
+    <p>--------------------------------------</p>
+    <h3>Project Name :</h3>
+   {{ projectName }}<br>
+
+
+
+{% endblock %}
+
+

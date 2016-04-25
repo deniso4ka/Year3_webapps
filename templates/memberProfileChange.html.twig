@@ -1,0 +1,61 @@
+{% extends '_baseMember.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+   Home page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <dl>
+        <dt>Id</dt>
+        <dd>{{ member.id }}</dd>
+    </dl>
+
+
+    <fieldset>
+        <legend>Please fill new details </legend>
+
+        <form
+                method="post"
+                action="/changeMemberDetails"
+        >
+
+
+
+            <p>
+                Your name:
+                <br>
+                <input type="text" name="name" required value="{{ member.name }}">
+            </p>
+            <p>
+                Your project id:
+                <br>
+                <input type="text" name="projectId" required value="{{ member.projectId }}">
+            </p>
+            <p>
+                Your status:
+                <br>
+                <input type="text" name="status" required value="{{ member.status }}">
+            </p>
+
+
+
+
+            <p>
+                <input type="submit" value="Change">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+
+{% endblock %}

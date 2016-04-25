@@ -1,0 +1,297 @@
+<?php
+/**
+ * controller
+ */
+
+namespace Itb\Controller;
+
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+use Itb\Model\Admin;
+use Itb\Model\Publication;
+
+/**
+ * publication
+ * publication controller
+ * Class PublicationController
+ * @package Itb\Controller
+ */
+class PublicationController
+{
+
+    /**
+     * displaying publications
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function publicationsAction(Request $request, Application $app)
+    {
+        $publications = Publication::getAll();
+
+        $argsArray = [
+            'publications' => $publications,
+        ];
+
+        $templateName = 'publications';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * redirecting to create publication page
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function memberCreatePublicationAction(Request $request, Application $app)
+    {
+        $argsArray = [
+            'message' => '',
+        ];
+
+        $templateName = 'memberPublicationCreate';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * creating publication
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function createPublicationAction(Request $request, Application $app)
+    {
+        $paramsPost = $request->request->all();
+        $title = $paramsPost['title'];
+        $authorId = $paramsPost['authorId'];
+        $url = $paramsPost['url'];
+        $pdfPath = $paramsPost['pdfPath'];
+
+        $title = filter_var($title, FILTER_SANITIZE_STRING);
+        $authorId = filter_var($authorId, FILTER_SANITIZE_STRING);
+        $url = filter_var($url, FILTER_SANITIZE_STRING);
+        $pdfPath = filter_var($pdfPath, FILTER_SANITIZE_STRING);
+
+        $user = $app['session']->get('user');
+        $publicationId = $user['publicationPickedId'];
+
+        $publication = new Publication();
+        $publication->setId($publicationId);
+        $publication->setTitle($title);
+        $publication->setAuthorId($authorId);
+        $publication->setUrl($url);
+        $publication->setPdfPath($pdfPath);
+
+        $updateSuccess = Publication::insert($publication);
+
+        $argsArray = [
+            'message' => 'Thanks the Publication has been created',
+        ];
+
+        $templateName = 'memberPublicationCreate';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * redirect to admin publication create
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function adminPublicationCreateAction(Request $request, Application $app)
+    {
+        $argsArray = [
+            'message' => '',
+        ];
+
+        $templateName = 'adminPublicationCreate';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * creating publication by admin
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function adminCreatePublicationAction(Request $request, Application $app)
+    {
+        $paramsPost = $request->request->all();
+        $title = $paramsPost['title'];
+        $authorId = $paramsPost['authorId'];
+        $url = $paramsPost['url'];
+        $pdfPath = $paramsPost['pdfPath'];
+
+        $title = filter_var($title, FILTER_SANITIZE_STRING);
+        $authorId = filter_var($authorId, FILTER_SANITIZE_STRING);
+        $url = filter_var($url, FILTER_SANITIZE_STRING);
+        $pdfPath = filter_var($pdfPath, FILTER_SANITIZE_STRING);
+
+        $user = $app['session']->get('user');
+
+        $publication = new Publication();
+
+        $publication->setTitle($title);
+        $publication->setAuthorId($authorId);
+        $publication->setUrl($url);
+        $publication->setPdfPath($pdfPath);
+
+        $updateSuccess = Publication::insert($publication);
+
+        $argsArray = [
+            'message' => 'Thanks the Publication has been created',
+        ];
+
+        $templateName = 'adminPublicationCreate';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * redirecting to admin publication
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function adminPublicationEditAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+
+        $publication = Publication::getAll();
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'edit' => 'edit'
+        );
+
+        $templateName = 'adminPublicationEdit';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * passing the id of picked publication for editing and storing it to session
+     * @param Request $request
+     * @param Application $app
+     * @param $id
+     * @return mixed
+     */
+    public function adminEditPublicAction(Request $request, Application $app, $id)
+    {
+        $user = $app['session']->get('user');
+        $rank = $user['rank'];
+        $userId =$user['id'];
+
+        $app['session']->set('user', array('id'=>$userId, 'rank'=>$rank, 'publicationPickedId' =>$id));
+
+        $publication = Publication::getAll();
+        $publicationRow = Publication::getOneById($id);
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'publicationRow' => $publicationRow,
+            'edit' => 'edit'
+        );
+
+        $templateName = 'adminPublicationEditWithInputFields';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * cahnging the information in publication
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function adminChangePublicationDetailsAction(Request $request, Application $app)
+    {
+        $paramsPost = $request->request->all();
+        $title = $paramsPost['title'];
+        $authorId = $paramsPost['authorId'];
+        $url = $paramsPost['url'];
+        $pdfPath = $paramsPost['pdfPath'];
+
+        $title = filter_var($title, FILTER_SANITIZE_STRING);
+        $authorId = filter_var($authorId, FILTER_SANITIZE_STRING);
+        $url = filter_var($url, FILTER_SANITIZE_STRING);
+        $pdfPath = filter_var($pdfPath, FILTER_SANITIZE_STRING);
+
+        $user = $app['session']->get('user');
+        $publicationId = $user['publicationPickedId'];
+        $rank = $user['rank'];
+
+        $publication = new Publication();
+        $publication->setId($publicationId);
+        $publication->setTitle($title);
+        $publication->setAuthorId($authorId);
+        $publication->setUrl($url);
+        $publication->setPdfPath($pdfPath);
+
+        $updateSuccess = Publication::update($publication);
+        $id = $user['id'];
+        $row = Admin::getOneById($id);
+        $image = $row->getImage();
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'rank'=>$rank,
+            'adminImage' =>$image
+        );
+
+        $templateName = 'homeAdmin';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * display table with delete fields
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function adminPublicationDeleteAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+
+        $publication = Publication::getAll();
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'delete' => 'delete'
+        );
+
+        $templateName = 'adminPublicationDelete';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * delete picked publication
+     * @param Request $request
+     * @param Application $app
+     * @param $id
+     * @return mixed
+     */
+    public function adminDeletePublicAction(Request $request, Application $app, $id)
+    {
+        $user = $app['session']->get('user');
+
+        $deleteSuccess = Publication::delete($id);
+
+        $publication = Publication::getAll();
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'delete' => 'delete',
+            'edit' => 'edit',
+            'create' => 'create'
+        );
+
+        $templateName = 'adminPublicationDelete';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+}

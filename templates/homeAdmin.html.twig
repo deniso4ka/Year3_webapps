@@ -1,0 +1,27 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+   Home page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+
+
+<h2>Hello {{ name }}</h2>
+   <h3> You are logged in as  {{ rank }}!!!</h3>
+   <br>
+   <p> Your id is {{ id }}</p>
+   <br>
+   <img class="img-circle" src="images/{{ adminImage }}" alt="image" style="width:150px; height:170px;">
+
+
+
+
+
+{% endblock %}

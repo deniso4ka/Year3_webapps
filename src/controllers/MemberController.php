@@ -1,0 +1,458 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: den
+ * Date: 23/03/2016
+ * Time: 15:39
+ */
+
+namespace Itb\Controller;
+
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+use Itb\Model\Member;
+use Itb\Model\Student;
+use Itb\Model\Project;
+use Itb\Model\Publication;
+
+/**
+ * class for members
+ * Class MemberController
+ * @package Itb\Controller
+ */
+class MemberController
+{
+
+    /**
+     * display present members
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function membersAction(Request $request, Application $app)
+    {
+        $membersPresent = Member::searchByColumn('status', 'present');
+        $studentsPresent = Student::searchByColumn('status', 'present');
+
+        $argsArray = [
+            'table1' => 'Supervisors',
+            'table2' => 'Students',
+            'membersPresent' => $membersPresent,
+            'studentsPresent' => $studentsPresent,
+        ];
+
+        $templateName = 'members';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * redirect to member ifo change page
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function memberInfoChangeAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+        $localId = $user['id'];
+        $member = Member::getOneById($localId);
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'member' => $member
+        );
+
+        $templateName = 'memberProfileChange';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * redirect to image change
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function memberPicChangeAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+
+        $argsArray = array(
+            'id' => $user['id']
+        );
+
+        $templateName = 'memberPicChange';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * member project change
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function memberProjectPicChangeAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+        $localId = $user['id'];
+        $localRank = $user['rank'];
+
+        $argsArray = array(
+            'id' => $localId
+        );
+
+        $templateName = 'memberProjectPicChange';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * changing member's details
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function changeMemberDetailsAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+        $localId = $user['id'];
+
+        $paramsPost = $request->request->all();
+        $name = $paramsPost['name'];
+        $proId = $paramsPost['projectId'];
+        $memStatus = $paramsPost['status'];
+
+        $memberName = filter_var($name, FILTER_SANITIZE_STRING);
+        $projectId = filter_var($proId, FILTER_SANITIZE_STRING);
+        $memberStatus = filter_var($memStatus, FILTER_SANITIZE_STRING);
+
+        $memb = Member::getOneById($localId);
+        $image = $memb->getImage();
+
+        $member = new Member();
+        $member->setId($localId);
+        $member->setName($memberName);
+        $member->setProjectId($projectId);
+        $member->setImage($image);
+        $member->setStatus($memberStatus);
+        $updateSuccess = Member::update($member);
+        $member = Member::getOneById($localId);
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'member' => $member
+        );
+
+        $templateName = 'homeMember';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * changing  member project picture
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function changeMemberProjectPictureAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+        $localId = $user['id'];
+        $localRank = $user['rank'];
+
+        $member = Member::getOneById($localId);
+        $projectId = $member->getProjectId();
+        $project = Project::getOneById($projectId);
+        $name = $project->getName();
+        $supervisor = $project->getSupervisor();
+        $description = $project->getDescription();
+        $status = $project->getStatus();
+
+        $errors= array();
+        $file_name = $_FILES['image']['name'];
+        $file_size =$_FILES['image']['size'];
+        $file_tmp =$_FILES['image']['tmp_name'];
+        $file_ext=strtolower(end(explode('.', $_FILES['image']['name'])));
+
+        $expensions= array('jpeg','jpg','png');
+
+        if (in_array($file_ext, $expensions)=== false) {
+            $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+        }
+        if ($file_size > 5000000) {
+            $errors[]='File must be not bigger then 5 MB';
+        }
+        if (empty($errors)==true) {
+            move_uploaded_file($file_tmp, "images/".$file_name);
+
+            //---------------------------refresh database and set a new image --------------------
+
+            $project = new Project();
+            $project->setId($projectId);
+            $project->setName($name);
+            $project->setSupervisor($supervisor);
+            $project->setDescription($description);
+            $project->setStatus($status);
+            $project->setImage($file_name);
+
+            $updateSuccess = Project::update($project);
+            $projectPrint = Project::getOneById($projectId);
+        } else {
+            print_r($errors);
+        }
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'rank' => $localRank,
+            'member' => $member
+        );
+
+        $templateName = 'homeMember';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * member picture change
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function changeMemberPictureAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+        $localId = $user['id'];
+        $localRank = $user['rank'];
+
+        $member = Member::getOneById($localId);
+        $name=$member->getName();
+        $projectId = $member->getProjectId();
+        $memberStatus = $member->getStatus();
+
+        $errors= array();
+        $file_name = $_FILES['image']['name'];
+        $file_size =$_FILES['image']['size'];
+        $file_tmp =$_FILES['image']['tmp_name'];
+        $file_ext=strtolower(end(explode('.', $_FILES['image']['name'])));
+
+        $expensions= array('jpeg','jpg','png');
+
+        if (in_array($file_ext, $expensions)=== false) {
+            $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+        }
+        if ($file_size > 5000000) {
+            $errors[]='File must be not bigger then 5 MB';
+        }
+        if (empty($errors)==true) {
+            move_uploaded_file($file_tmp, "images/".$file_name);
+
+
+
+            $member = new Member();
+            $member->setId($localId);
+            $member->setName($name);
+            $member->setProjectId($projectId);
+            $member->setStatus($memberStatus);
+            $member->setImage($file_name);
+            $updateSuccess = Member::update($member);
+
+            $memberPrint = Member::getOneById($localId);
+        } else {
+            print_r($errors);
+        }
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'rank' => $localRank,
+            'member' =>$memberPrint
+        );
+
+        $templateName = 'homeMember';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * display publication delete table
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function memberPublicationDeleteAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+
+        $publication = Publication::getAll();
+
+        $argsArray = array(
+           'id' => $user['id'],
+            'publications' => $publication,
+            'delete' => 'delete'
+        );
+
+        $templateName = 'memberPublicationDelete';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * display member edit option
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function memberEditPublicationAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+
+        $publication = Publication::getAll();
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'edit' => 'edit'
+        );
+
+        $templateName = 'memberPublicationEdit';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * deleting specifiv publication
+     * @param Request $request
+     * @param Application $app
+     * @param $id
+     * @return mixed
+     */
+    public function memberDeletePublicAction(Request $request, Application $app, $id)
+    {
+        $user = $app['session']->get('user');
+
+        $deleteSuccess = Publication::delete($id);
+
+        $publication = Publication::getAll();
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'delete' => 'delete',
+            'edit' => 'edit',
+            'create' => 'create'
+        );
+
+        $templateName = 'memberPublicationDelete';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * display specific publication for editing
+     * @param Request $request
+     * @param Application $app
+     * @param $id
+     * @return mixed
+     */
+    public function memberEditPublicAction(Request $request, Application $app, $id)
+    {
+        $user = $app['session']->get('user');
+        $rank = $user['rank'];
+        $userId =$user['id'];
+
+        $app['session']->set('user', array('id'=>$userId, 'rank'=>$rank, 'publicationPickedId' =>$id));
+
+        $publication = Publication::getAll();
+        $publicationRow = Publication::getOneById($id);
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'publicationRow' => $publicationRow,
+            'edit' => 'edit'
+        );
+
+        $templateName = 'memberPublicationEditWithInputFields';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * edit publication
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function changePublicationDetailsAction(Request $request, Application $app)
+    {
+        $paramsPost = $request->request->all();
+        $title = $paramsPost['title'];
+        $authorId = $paramsPost['authorId'];
+        $url = $paramsPost['url'];
+        $pdfPath = $paramsPost['pdfPath'];
+
+        $title = filter_var($title, FILTER_SANITIZE_STRING);
+        $authorId = filter_var($authorId, FILTER_SANITIZE_STRING);
+        $url = filter_var($url, FILTER_SANITIZE_STRING);
+        $pdfPath = filter_var($pdfPath, FILTER_SANITIZE_STRING);
+
+        $user = $app['session']->get('user');
+        $publicationId = $user['publicationPickedId'];
+
+        $publication = new Publication();
+        $publication->setId($publicationId);
+        $publication->setTitle($title);
+        $publication->setAuthorId($authorId);
+        $publication->setUrl($url);
+        $publication->setPdfPath($pdfPath);
+
+        $updateSuccess = Publication::update($publication);
+        $id = $user['id'];
+        $member = Member::getOneById($id);
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'publications' => $publication,
+            'member'=> $member
+        );
+
+        $templateName = 'homeMember';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * display page for creating publication
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function memberCreatePublicAction(Request $request, Application $app)
+    {
+        $project = Project::getOneById();
+
+        $argsArray = [
+            'project' => $project
+        ];
+
+        $templateName = 'detailProject';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * display the options
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function memberProjectCrudAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+
+        $argsArray = array(
+            'id' => $user['id']
+        );
+
+        $templateName = 'memberProjectCrud';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+}

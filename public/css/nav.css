@@ -1,0 +1,51 @@
+
+nav {
+    margin: 0.5rem;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+}
+
+nav li {
+    flex: 1;
+}
+
+nav a {
+    display: block;
+    padding: 0.5rem;
+    background-color: white;
+
+    text-align: center;
+    border: 0.1rem solid darkgreen;
+
+    text-decoration: none;
+    color: darkgreen;
+    border-radius: 40%;
+}
+
+nav a:hover {
+    background-color: #52FF33;
+    color: white;
+    text-decoration: underline;
+}
+
+nav a.current_page {
+    background-color: darkgreen;
+    color: lightyellow;
+}
+
+.nav-list li ul {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+.nav-list li:hover ul {
+    display: block;
+}

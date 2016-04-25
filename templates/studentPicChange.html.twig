@@ -1,0 +1,34 @@
+{% extends '_baseStudent.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+   Home page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <dl>
+        <dt>Id</dt>
+        <dd>{{ id }}</dd>
+    </dl>
+
+
+    <form  method="POST"
+           action="/changePicture" enctype="multipart/form-data">
+        Select image to upload:
+        </br>
+        </br>
+        <input type="file" name="image">
+        </br>
+        </br>
+        <input type="submit" value="Upload File">
+
+        </br>
+    </form>
+
+
+{% endblock %}

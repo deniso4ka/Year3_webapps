@@ -1,0 +1,167 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: den
+ * Date: 28/03/2016
+ * Time: 17:42
+ */
+
+namespace Itb\Controller;
+
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+use Itb\Model\Student;
+
+/**
+ * class for student
+ * Class StudentController
+ * @package Itb\Controller
+ */
+class StudentController
+{
+
+    /**
+     * redirecting to student change
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function studentInfoChangeAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+        $localId = $user['id'];
+        $student = Student::getOneById($localId);
+
+        $argsArray = array(
+            'id' => $user['id'],
+            'student' => $student
+        );
+
+        $templateName = 'studentProfileChange';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * redirecting to student change page
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function studentPicChangeAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+
+        $argsArray = array(
+            'id' => $user['id']
+        );
+
+        $templateName = 'studentPicChange';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * change student details
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function changeStudentDetailsAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+
+        $localId = $user['id'];
+
+        $paramsPost = $request->request->all();
+        $name = $paramsPost['name'];
+        $projectId = $paramsPost['projectId'];
+        $studId = $paramsPost['memberId'];
+        $studStatus = $paramsPost['status'];
+
+        $studentName = filter_var($name, FILTER_SANITIZE_STRING);
+        $studentProjectId = filter_var($projectId, FILTER_SANITIZE_STRING);
+        $studentId = filter_var($studId, FILTER_SANITIZE_STRING);
+        $studentStatus = filter_var($studStatus, FILTER_SANITIZE_STRING);
+        $stud = Student::getOneById($localId);
+        $image = $stud->getImage();
+        $student = new Student();
+
+        $student->setId($localId);
+        $student->setName($studentName);
+        $student->setProjectId($studentProjectId);
+        $student->setMemberId($studentId);
+        $student->setImage($image);
+        $student->setStatus($studentStatus);
+        $updateSuccess = Student::update($student);
+        $student = Student::getOneById($localId);
+
+        $argsArray = array(
+           'id' => $user['id'],
+            'student' => $student
+        );
+
+        $templateName = 'studentProfileChange';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * cstudent change picture
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function changePictureAction(Request $request, Application $app)
+    {
+        $user = $app['session']->get('user');
+        $localId = $user['id'];
+
+        $student = Student::getOneById($localId);
+
+        $name=$student->getName();
+        $projectId = $student->getProjectId();
+        $studId = $student->getMemberId();
+        $studStatus = $student->getStatus();
+
+        $errors= array();
+        $file_name = $_FILES['image']['name'];
+        $file_size =$_FILES['image']['size'];
+        $file_tmp =$_FILES['image']['tmp_name'];
+        $file_ext=strtolower(end(explode('.', $_FILES['image']['name'])));
+
+        $expensions= array('jpeg','jpg','png');
+
+        if (in_array($file_ext, $expensions)=== false) {
+            $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+        }
+        if ($file_size > 5000000) {
+            $errors[]='File must be not bigger then 5 MB';
+        }
+        if (empty($errors)==true) {
+            move_uploaded_file($file_tmp, "images/".$file_name);
+
+            $student->setId($localId);
+            $student->setName($name);
+            $student->setProjectId($projectId);
+            $student->setMemberId($studId);
+            $student->setImage($file_name);
+            $student->setStatus($studStatus);
+            $updateSuccess = Student::update($student);
+
+            $stud = Student::getOneById($localId);
+        } else {
+            print_r($errors);
+        }
+
+        $argsArray = array(
+                'id' => $user['id'],
+                'student' => $stud
+            );
+
+        $templateName = 'homeStudent';
+
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+}
+

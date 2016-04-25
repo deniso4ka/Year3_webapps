@@ -1,0 +1,48 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Member Publication Create Page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> Name </th>
+            <th> Project Id </th>
+            <th> Supervisor Id</th>
+            <th> Status </th>
+            <th> Image </th>
+
+{{ members.id }}
+
+        </tr>
+
+        {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.projectId }}</td>
+                <td>{{ student.memberId }}</td>
+                <td>{{ student.status }}</td>
+                <td>{{ student.image }}</td>
+                <td><a href="adminDeleteStudent/{{ student.id }}">{{ delete  }}</a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+
+
+
+
+
+{% endblock %}

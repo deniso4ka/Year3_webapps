@@ -1,0 +1,52 @@
+{% extends '_baseAdmin.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+   Home page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block homeNavStyle %}current_page{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+
+    <dl>
+        <dt>Id</dt>
+        <dd>{{ id }}</dd>
+    </dl>
+
+
+    <fieldset>
+        <legend>Please fill new details </legend>
+
+        <form
+                method="post"
+                action="/changeAdminDetails " enctype="multipart/form-data"
+        >
+
+
+
+            <p>
+                Your name:
+                <br>
+                <input type="text" name="name" required value="{{ admin.name }}">
+            </p>
+            <p>
+                Please pic your image:
+                <br>
+            <input type="file" name="image">
+            </p>
+            <p>
+                <input type="submit" value="Change">
+            </p>
+
+        </form>
+    </fieldset>
+
+
+
+
+
+
+{% endblock %}
