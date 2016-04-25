@@ -8,14 +8,14 @@
 
 namespace Itb\Model;
 
-use Mattsmithdev\PdoCrud\DatabaseTable;
+
 
 /**
  * publication
  * Class Publication
  * @package Itb\model
  */
-class Publication extends DatabaseTable
+class Publication extends MyDatabaseTable
 {
     /**
      * variable is used to hold id

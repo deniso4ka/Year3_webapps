@@ -8,14 +8,13 @@
 
 namespace Itb\Model;
 
-use Mattsmithdev\PdoCrud\DatabaseTable;
 
 /**
  * member
  * Class Member
  * @package Itb\model
  */
-class Member extends DatabaseTable
+class Member extends MyDatabaseTable
 {
     /**
      *variable to hold am id
@@ -140,21 +139,4 @@ class Member extends DatabaseTable
     }
 
 
-    public static function searchIdByColumn($columnName, $id)
-    {
-        $db = new DatabaseManager();
-        $connection = $db->getDbh();
-
-        // wrap wildcard '%' around the serach text for the SQL query
-
-
-        $statement = $connection->prepare('SELECT * from ' . static::getTableName()  . ' WHERE ' . $columnName . ' =:id');
-        $statement->bindParam(':id', $id, \PDO::PARAM_INT);
-        $statement->setFetchMode(\PDO::FETCH_CLASS, __CLASS__);
-        $statement->execute();
-
-        $objects = $statement->fetchAll();
-
-        return $objects;
-    }
 }

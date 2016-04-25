@@ -7,10 +7,11 @@
     "autoload": {
         "psr-4" : {
             "Itb\\Model\\": "src/model",
-            "Itb\\Controller\\": "src/controller",
+            "Itb\\Controller\\": "src/controllers",
             "Itb\\Utility\\": "src/utility"
         }
     },
+
     "scripts" : {
         "phpunit": "php phpunit.phar --log-tap tests/log/phpunit.log",
         "phpdoc": "php phpDocumentor.phar -d ./src2 -t ./src2/documentation"
