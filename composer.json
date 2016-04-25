@@ -25,6 +25,6 @@
 
         "phpdoc": "php phpDocumentor.phar -d ./src -t ./src/documentation",
         "phpdoc-twig": "php phpDocumentor.phar -d ./src -t ./src/documentation --template='responsive-twig'"
-        
+
     }
 }
