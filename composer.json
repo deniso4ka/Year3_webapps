@@ -13,7 +13,18 @@
     },
 
     "scripts" : {
-        "phpunit": "php phpunit.phar --log-tap tests/log/phpunit.log",
-        "phpdoc": "php phpDocumentor.phar -d ./src2 -t ./src2/documentation"
+        "phpunit":"php phpunit.phar --log-tap ./tests/log.txt",
+        "phpunit-coverage":"php phpunit.phar tests --coverage-html ./tests/coverage",
+
+        "fixsrc":"php php-cs-fixer.phar fix --level=psr2 ./src",
+        "fixsrccontrollers":"php php-cs-fixer.phar fix --level=psr2 ./src/controllers",
+        "fixsrcmodel":"php php-cs-fixer.phar fix --level=psr2 ./src/model",
+        "fixpublic":"php php-cs-fixer.phar fix --level=psr2 ./public",
+        "fixtests":"php php-cs-fixer.phar fix --level=psr2 ./tests",
+        "fixtemplates":"php php-cs-fixer.phar fix --level=psr2 ./templates",
+
+        "phpdoc": "php phpDocumentor.phar -d ./src -t ./src/documentation",
+        "phpdoc-twig": "php phpDocumentor.phar -d ./src -t ./src/documentation --template='responsive-twig'"
+        
     }
 }
