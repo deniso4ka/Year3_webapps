@@ -8,11 +8,10 @@
 
 namespace Itb\Model;
 
-
 /**
  * member
  * Class Member
- * @package Itb\model
+ * @package Itb\Model
  */
 class Member extends MyDatabaseTable
 {
@@ -137,6 +136,4 @@ class Member extends MyDatabaseTable
     {
         $this->image = $image;
     }
-
-
 }

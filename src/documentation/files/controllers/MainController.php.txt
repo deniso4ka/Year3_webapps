@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: den
+ * Date: 23/03/2016
+ * Time: 15:39
+ */
+
 namespace Itb\Controller;
 
 use Silex\Application;
@@ -58,6 +65,10 @@ class MainController
         $projectName = '';
 
         $member = Member::getOneById($id);
+        if ($member == null) {
+            return $app->redirect('/wrongId');
+        }
+
         $projectId = $member->getProjectId();
         $studentRows = Student::searchIdByColumn('projectId', $projectId);
         $projectRow = Project::getOneById($projectId);
@@ -95,6 +106,11 @@ class MainController
     public function detailStudAction(Request $request, Application $app, $id)
     {
         $student = Student::getOneById($id);
+
+        if ($student == null) {
+            return $app->redirect('/wrongId');
+        }
+
         $projectId = $student->getProjectId();
         $memberId = $student->getMemberId();
         $projectRow = Project::getOneById($projectId);
@@ -123,6 +139,11 @@ class MainController
     public function detailProjectAction(Request $request, Application $app, $id)
     {
         $project = Project::getOneById($id);
+
+        if ($project == null) {
+            return $app->redirect('/wrongId');
+        }
+
         $supervisorId = $project->getSupervisor();
         $supervisorRow = Member::getOneById($supervisorId);
         $supervisorName ='';
@@ -191,6 +212,38 @@ class MainController
         ];
 
         $templateName = 'membersPast';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * no id were mentioned
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function noEnteredIdAction(Request $request, Application $app)
+    {
+        $argsArray = [
+
+        ];
+
+        $templateName = 'noIdEntered';
+        return $app['twig']->render($templateName . '.html.twig', $argsArray);
+    }
+
+    /**
+     * wrong id
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function wrongIdAction(Request $request, Application $app)
+    {
+        $argsArray = [
+
+        ];
+
+        $templateName = 'wrongId';
         return $app['twig']->render($templateName . '.html.twig', $argsArray);
     }
 }

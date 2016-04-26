@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Apr 18, 2016 at 03:38 AM
+-- Generation Time: Apr 26, 2016 at 04:53 AM
 -- Server version: 10.1.9-MariaDB-log
 -- PHP Version: 5.6.16
 
@@ -130,8 +130,8 @@ CREATE TABLE `publications` (
 INSERT INTO `publications` (`id`, `title`, `authorId`, `url`, `pdfPath`) VALUES
 (1, 'Gaming Developement', 1, 'http://google.com', 'some.pdf'),
 (2, ' Graphical Interface Developemnet', 2, 'http://google.com', 'some.pdf'),
-(3, ' Graphics in 3D', 3, 'http://google.com', ' some.txt'),
-(4, ' Gaming Management Approaches', 4, 'http://google.com', 'some.txt');
+(3, ' Graphics in 3D', 3, 'http://google.com', ' some.pdf'),
+(4, ' Gaming Management Approaches', 4, 'http://google.com', 'some.pdf');
 
 -- --------------------------------------------------------
 

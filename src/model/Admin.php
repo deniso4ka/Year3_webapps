@@ -8,11 +8,10 @@
 
 namespace Itb\Model;
 
-
 /**
  * admin
  * Class Admin
- * @package Itb\model
+ * @package Itb\Model
  */
 class Admin extends MyDatabaseTable
 {

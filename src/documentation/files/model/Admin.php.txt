@@ -6,16 +6,14 @@
  * Time: 16:33
  */
 
-namespace Itb\model;
-
-use Mattsmithdev\PdoCrud\DatabaseTable;
+namespace Itb\Model;
 
 /**
  * admin
  * Class Admin
- * @package Itb\model
+ * @package Itb\Model
  */
-class Admin extends DatabaseTable
+class Admin extends MyDatabaseTable
 {
     /**
      * variable used to store id

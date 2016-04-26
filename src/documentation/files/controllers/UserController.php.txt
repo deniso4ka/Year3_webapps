@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: den
+ * Date: 03/04/2016
+ * Time: 16:37
+ */
 namespace Itb\Controller;
 
 use Silex\Application;
@@ -11,8 +17,7 @@ use Itb\Model\Main;
 use Itb\Model\Project;
 
 /**
- * user
- * class for user
+ * userController
  * Class UserController
  * @package Itb\Controller
  */
@@ -52,7 +57,7 @@ class UserController
 
             if (password_verify($userPassword, $pass)) {
                 $app['session']->set('user', array('rank' => $rank, 'id' => $id, 'member' => $member, 'name' => $name ));
-                return $app->redirect('/loginSuccessSupervisor');
+                return $app->redirect('/loginSuccessSuper');
             }
         }
 
@@ -63,7 +68,7 @@ class UserController
 
             if (password_verify($userPassword, $pass)) {
                 $app['session']->set('user', array('rank' => $rank, 'id' => $id, 'name' => $name ));
-                return $app->redirect('/loginSuccessStudent');
+                return $app->redirect('/loginSuccessStud');
             }
         }
 

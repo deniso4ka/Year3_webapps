@@ -8,11 +8,10 @@
 
 namespace Itb\Model;
 
-
 /**
  * group
  * Class Group
- * @package Itb\model
+ * @package Itb\Model
  */
 class Group extends MyDatabaseTable
 {

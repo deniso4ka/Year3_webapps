@@ -8,12 +8,10 @@
 
 namespace Itb\Model;
 
-
-
 /**
  * publication
  * Class Publication
- * @package Itb\model
+ * @package Itb\Model
  */
 class Publication extends MyDatabaseTable
 {

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: den
+ * Date: 03/04/2016
+ * Time: 16:37
+ */
 namespace Itb\Controller;
 
 use Silex\Application;
@@ -11,8 +17,7 @@ use Itb\Model\Main;
 use Itb\Model\Project;
 
 /**
- * user
- * class for user
+ * userController
  * Class UserController
  * @package Itb\Controller
  */

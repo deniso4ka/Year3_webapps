@@ -22,9 +22,13 @@ $app->get('/publications', UtilityClass::controller('Itb\Controller', 'publicati
 
 //-----------------------------Call specific member or project---------------------------------------------
 $app->get('/detailMem/{id}', UtilityClass::controller('Itb\Controller', 'main/detailMem'));
+$app->get('/detailMem/', UtilityClass::controller('Itb\Controller', 'main/noEnteredId'));
 $app->get('/detailStud/{id}', UtilityClass::controller('Itb\Controller', 'main/detailStud'));
+$app->get('/detailStud/', UtilityClass::controller('Itb\Controller', 'main/noEnteredId'));
+$app->get('/wrongId', UtilityClass::controller('Itb\Controller', 'main/wrongId'));
 
 $app->get('/detailProject/{id}', UtilityClass::controller('Itb\Controller', 'main/detailProject'));
+$app->get('/detailProject/', UtilityClass::controller('Itb\Controller', 'main/noEnteredId'));
 
 //-----------------------------Login actions---------------------------------------------
 $app->post('/processForm', UtilityClass::controller('Itb\Controller', 'user/login'));

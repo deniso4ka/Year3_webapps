@@ -8,12 +8,10 @@
 
 namespace Itb\Model;
 
-
-
 /**
  * project
  * Class Project
- * @package Itb\model
+ * @package Itb\Model
  */
 class Project extends MyDatabaseTable
 {
