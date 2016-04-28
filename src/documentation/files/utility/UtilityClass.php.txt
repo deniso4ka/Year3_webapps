@@ -1,4 +1,7 @@
 <?php
+/**
+ * Utility class
+ */
 namespace Itb\utility;
 
 /**
