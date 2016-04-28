@@ -2,3 +2,4 @@ vendor
 .idea
 *.phar
 src/documentation
+tests/coverage

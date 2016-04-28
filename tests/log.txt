@@ -32,4 +32,7 @@ ok 30 - ItbTest\UserTest::testSetGetRank
 ok 31 - ItbTest\UserTest::testSetGetStudentId
 ok 32 - ItbTest\UserTest::testSetGetMemberId
 ok 33 - ItbTest\UserTest::testSetGetPassword
-1..33
+ok 34 - ItbTest\ZMetaTest::testPSR2DirectorySrc
+ok 35 - ItbTest\ZMetaTest::testPSR2DirectoryTests
+ok 36 - ItbTest\ZMetaTest::testPSR2DirectoryPublic
+1..36
